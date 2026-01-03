@@ -32,6 +32,16 @@ The pipeline performs **ingestion → cleaning → feature derivation → star s
 
 ---
 
+## Team & Roles
+
+- **Magomed Makhsudov** — Technical Lead  
+  (Pipeline implementation, Airflow DAG, experiments, figures & tables)
+
+- **Uzoma Nnaemeka Eze** — Documentation & Presentation Lead  
+  (Final report, slides, formatting, consistency)
+
+---
+
 ## Latest successful run (proof of reproducibility)
 
 - **Airflow DAG run_id:** `manual__2026-01-03T10:17:47+00:00` → **success**  
