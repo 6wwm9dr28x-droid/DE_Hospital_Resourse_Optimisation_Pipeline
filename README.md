@@ -7,14 +7,12 @@
 - [Project Overview](#project-overview)
 - [Deliverables](#deliverables)
 - [Team & Roles](#team--roles)
-- [Datasets](#datasets)
-- [Research Questions](#research-questions)
 - [Project Structure](#project-structure)
-- [Reproducibility](#reproducibility)
 - [Reproduce the Results](#reproduce-the-results)
 
 ---
 
+## Project Overview
 This project implements a reproducible **data‑engineering pipeline** integrating:
 - **Outpatient appointments** — `hospital-KaggleV2-May-2016.csv`
 - **Inpatient admissions** — `HDHI Admission data.csv`
@@ -23,7 +21,7 @@ The pipeline performs **ingestion → cleaning → feature derivation → star s
 
 ---
 
-## Deliverables (all code‑generated)
+## Deliverables 
 
 - **RQ1 – Integration & Quality**  
   **Figures:** `RQ1_Fig1.pdf` (pipeline), `RQ1_Fig2.pdf` (missingness)  
@@ -45,16 +43,19 @@ The pipeline performs **ingestion → cleaning → feature derivation → star s
   **Figures:** `RQ5_Fig1.pdf` (LOS distributions), `RQ5_Fig2.pdf` (occupancy + 14‑day MA forecast)  
   **Tables:** `RQ5_Table1.xlsx` (LOS summaries), `RQ5_Table2.xlsx` (backtest + forecast series)
 
+#### All tables and figures are code generated
 ---
 
 ## Project Structure
 
+   ```bash
 dags/                  # Airflow DAG definition
 src/                   # Core pipeline logic
 data/                  # Intermediate and processed data (no raw uploads)
 figures/               # Auto-generated PDF figures
 tables/                # Auto-generated tables (CSV/XLSX)
 SUBMISSION/            # Submission templates and instructions
+   ```
 
 ---
 
