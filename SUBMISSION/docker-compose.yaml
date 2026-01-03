@@ -1,0 +1,85 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  airflow-init:
+    image: apache/airflow:2.9.3-python3.12
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__FERNET_KEY=-8q2A9zsIo9XU5pivaaqV5LbTYq-m_PlTVXzTM7BZEI=
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      - PYTHONPATH=/opt/project
+      - _AIRFLOW_WWW_USER_CREATE=true
+      - _AIRFLOW_WWW_USER_USERNAME=admin
+      - _AIRFLOW_WWW_USER_PASSWORD=admin
+      - _AIRFLOW_WWW_USER_FIRSTNAME=Max
+      - _AIRFLOW_WWW_USER_LASTNAME=Student
+      - _AIRFLOW_WWW_USER_EMAIL=you@example.com
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./:/opt/project
+    user: "${AIRFLOW_UID}:${AIRFLOW_GID}"
+    command: ["bash", "-lc", "airflow db migrate && echo 'Init done'"]
+
+  webserver:
+    image: apache/airflow:2.9.3-python3.12
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__FERNET_KEY=-8q2A9zsIo9XU5pivaaqV5LbTYq-m_PlTVXzTM7BZEI=
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      - AIRFLOW__WEBSERVER__WEB_SERVER_PORT=8080
+      - PYTHONPATH=/opt/project
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./:/opt/project
+    ports:
+      - "8080:8080"
+    user: "${AIRFLOW_UID}:${AIRFLOW_GID}"
+    command: ["bash", "-lc", "pip install -r /opt/project/requirements.txt && airflow webserver"]
+
+  scheduler:
+    image: apache/airflow:2.9.3-python3.12
+    depends_on:
+      postgres:
+        condition: service_healthy
+      webserver:
+        condition: service_started
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__FERNET_KEY=-8q2A9zsIo9XU5pivaaqV5LbTYq-m_PlTVXzTM7BZEI=
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+      - PYTHONPATH=/opt/project
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./:/opt/project
+    user: "${AIRFLOW_UID}:${AIRFLOW_GID}"
+    command: ["bash", "-lc", "pip install -r /opt/project/requirements.txt && airflow scheduler"]
+
+volumes:
+  postgres_data:

@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+airflow_home/
+logs/
+.DS_Store
+*.log
+Figures_and_Tables.zip
+Submission_Package.zip
+hospital-KaggleV2-May-2016.csv
+HDHI Admission data.csv

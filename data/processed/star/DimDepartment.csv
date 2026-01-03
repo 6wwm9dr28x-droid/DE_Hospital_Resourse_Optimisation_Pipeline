@@ -1,0 +1,82 @@
+DepartmentName,DepartmentID,Category
+JARDIM DA PENHA,1,OutpatientLocation
+MATA DA PRAIA,2,OutpatientLocation
+PONTAL DE CAMBURI,3,OutpatientLocation
+REPÚBLICA,4,OutpatientLocation
+GOIABEIRAS,5,OutpatientLocation
+ANDORINHAS,6,OutpatientLocation
+CONQUISTA,7,OutpatientLocation
+NOVA PALESTINA,8,OutpatientLocation
+DA PENHA,9,OutpatientLocation
+TABUAZEIRO,10,OutpatientLocation
+BENTO FERREIRA,11,OutpatientLocation
+SÃO PEDRO,12,OutpatientLocation
+SANTA MARTHA,13,OutpatientLocation
+SÃO CRISTÓVÃO,14,OutpatientLocation
+MARUÍPE,15,OutpatientLocation
+GRANDE VITÓRIA,16,OutpatientLocation
+SÃO BENEDITO,17,OutpatientLocation
+ILHA DAS CAIEIRAS,18,OutpatientLocation
+SANTO ANDRÉ,19,OutpatientLocation
+SOLON BORGES,20,OutpatientLocation
+BONFIM,21,OutpatientLocation
+JARDIM CAMBURI,22,OutpatientLocation
+MARIA ORTIZ,23,OutpatientLocation
+JABOUR,24,OutpatientLocation
+ANTÔNIO HONÓRIO,25,OutpatientLocation
+RESISTÊNCIA,26,OutpatientLocation
+ILHA DE SANTA MARIA,27,OutpatientLocation
+JUCUTUQUARA,28,OutpatientLocation
+MONTE BELO,29,OutpatientLocation
+MÁRIO CYPRESTE,30,OutpatientLocation
+SANTO ANTÔNIO,31,OutpatientLocation
+BELA VISTA,32,OutpatientLocation
+PRAIA DO SUÁ,33,OutpatientLocation
+SANTA HELENA,34,OutpatientLocation
+ITARARÉ,35,OutpatientLocation
+INHANGUETÁ,36,OutpatientLocation
+UNIVERSITÁRIO,37,OutpatientLocation
+SÃO JOSÉ,38,OutpatientLocation
+REDENÇÃO,39,OutpatientLocation
+SANTA CLARA,40,OutpatientLocation
+CENTRO,41,OutpatientLocation
+PARQUE MOSCOSO,42,OutpatientLocation
+DO MOSCOSO,43,OutpatientLocation
+SANTOS DUMONT,44,OutpatientLocation
+CARATOÍRA,45,OutpatientLocation
+ARIOVALDO FAVALESSA,46,OutpatientLocation
+ILHA DO FRADE,47,OutpatientLocation
+GURIGICA,48,OutpatientLocation
+JOANA D´ARC,49,OutpatientLocation
+CONSOLAÇÃO,50,OutpatientLocation
+PRAIA DO CANTO,51,OutpatientLocation
+BOA VISTA,52,OutpatientLocation
+MORADA DE CAMBURI,53,OutpatientLocation
+SANTA LUÍZA,54,OutpatientLocation
+SANTA LÚCIA,55,OutpatientLocation
+BARRO VERMELHO,56,OutpatientLocation
+ESTRELINHA,57,OutpatientLocation
+FORTE SÃO JOÃO,58,OutpatientLocation
+FONTE GRANDE,59,OutpatientLocation
+ENSEADA DO SUÁ,60,OutpatientLocation
+SANTOS REIS,61,OutpatientLocation
+PIEDADE,62,OutpatientLocation
+JESUS DE NAZARETH,63,OutpatientLocation
+SANTA TEREZA,64,OutpatientLocation
+CRUZAMENTO,65,OutpatientLocation
+ILHA DO PRÍNCIPE,66,OutpatientLocation
+ROMÃO,67,OutpatientLocation
+COMDUSA,68,OutpatientLocation
+SANTA CECÍLIA,69,OutpatientLocation
+VILA RUBIM,70,OutpatientLocation
+DE LOURDES,71,OutpatientLocation
+DO QUADRO,72,OutpatientLocation
+DO CABRAL,73,OutpatientLocation
+HORTO,74,OutpatientLocation
+SEGURANÇA DO LAR,75,OutpatientLocation
+ILHA DO BOI,76,OutpatientLocation
+FRADINHOS,77,OutpatientLocation
+NAZARETH,78,OutpatientLocation
+AEROPORTO,79,OutpatientLocation
+ILHAS OCEÂNICAS DE TRINDADE,80,OutpatientLocation
+PARQUE INDUSTRIAL,81,OutpatientLocation
