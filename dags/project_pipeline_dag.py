@@ -1,3 +1,16 @@
+"""
+Hospital Resource Optimization Pipeline
+Airflow DAG
+
+Stages:
+- extract_data
+- clean_data
+- build_star_schema
+- generate_rq1 ... generate_rq5
+- write_provenance
+
+All figures and tables in the submission are generated via this DAG.
+"""
 from datetime import datetime
 from airflow import DAG
 from airflow.operators.python import PythonOperator
