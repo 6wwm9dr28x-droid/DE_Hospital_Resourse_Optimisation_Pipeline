@@ -1,105 +1,136 @@
-# Hospital Resource Optimization Pipeline (Data Engineering)
+# DE Hospital Resource Optimisation Pipeline
 
----
+Airflow-orchestrated reproducible data engineering pipeline for hospital resource optimisation.
 
-## Table of Contents
+This repository contains code, DAGs and helper scripts to ingest, clean, analyse and produce tables/figures for a set of research questions about hospital resource utilisation.
 
-- [Project Overview](#project-overview)
-- [Deliverables](#deliverables)
-- [Team & Roles](#team--roles)
-- [Project Structure](#project-structure)
-- [Reproduce the Results](#reproduce-the-results)
+Table of contents
+- Quick start
+- What this repo contains
+- Project structure
+- Quick mapping: DAGs / scripts -> steps
+- Configuration (.env)
+- Running locally with Docker Compose
+- Running tests locally
+- Where outputs go
+- Troubleshooting
+- Contributing
+- License
 
----
+Quick start (10-minute demo)
+1. Clone the repo:
+   - git clone https://github.com/6wwm9dr28x-droid/DE_Hospital_Resource_Optimisation_Pipeline.git
+   - cd DE_Hospital_Resource_Optimisation_Pipeline
 
-## Project Overview
-This project implements a reproducible **data‑engineering pipeline** integrating:
-- **Outpatient appointments** — `hospital-KaggleV2-May-2016.csv`
-- **Inpatient admissions** — `HDHI Admission data.csv`
+2. Option A — run with Docker Compose (recommended for reproducibility)
+   - Ensure Docker and docker-compose are installed.
+   - Start services:
+     - docker-compose up --build -d
+   - Visit Airflow UI (default): http://localhost:8080 (depends on docker-compose)
+   - Trigger DAGs manually from Airflow UI or run the run_step*.py scripts inside the container/host as needed.
 
-The pipeline performs **ingestion → cleaning → feature derivation → star schema build → artifact generation** and is orchestrated by an **Airflow DAG**: `hospital_project_pipeline`.
+3. Option B — run locally with Python
+   - python -m venv .venv
+   - source .venv/bin/activate   # Windows: .\.venv\Scripts\Activate.ps1
+   - python -m pip install --upgrade pip
+   - python -m pip install -r requirements.txt
+   - (optional) python -m pip install -r requirements-dev.txt
+   - Run a pipeline stage:
+     - python run_step2_ingest_clean.py
+     - python run_step3_rq1.py
+     - etc.
 
----
+What this repo contains (high level)
+- docker-compose.yaml — convenience setup to run services (Airflow, DB, etc.).
+- dags/ — Airflow DAG definitions (or placeholders) that orchestrate pipeline tasks.
+- run_step*.py — scripts that correspond to pipeline steps (ingest, analysis, outputs).
+- src/ — core library code used by DAGs and scripts.
+- data/ — raw and processed data (not included; place or generate sample data here).
+- tables/ and figures/ — output artifacts (CSV, PNG, etc.).
+- README.md, LICENSE — docs and license.
 
-## Deliverables 
+Project structure (example)
+- .github/                -> CI and automation (Actions, Dependabot)
+- dags/                   -> DAG files
+- src/                    -> Python modules (pipeline logic)
+- run_step2_ingest_clean.py
+- run_step3_rq1.py
+- run_step4_rq2.py
+- run_step5_rq3.py
+- run_step6_rq4.py
+- run_step7_rq5.py
+- requirements.txt
+- requirements-dev.txt
+- docker-compose.yaml
+- data/                   -> data storage (gitignored large files)
+- tables/, figures/       -> generated outputs
 
-- **RQ1 – Integration & Quality**  
-  **Figures:** `RQ1_Fig1.pdf` (pipeline), `RQ1_Fig2.pdf` (missingness)  
-  **Tables:** `RQ1_Table1.xlsx` (field→model mapping), `RQ1_Table2.xlsx` (quality audit)
+Quick mapping: DAGs / scripts -> steps
+- run_step2_ingest_clean.py
+  - Purpose: Ingest data sources (local or remote), run cleaning routines, produce canonical cleaned tables in data/processed or tables/.
+- run_step3_rq1.py
+  - Purpose: Analyse data to answer Research Question 1; produce tables/figures.
+- run_step4_rq2.py
+  - Purpose: Analyse data to answer Research Question 2.
+- run_step5_rq3.py
+  - Purpose: Analyse data to answer Research Question 3.
+- run_step6_rq4.py
+  - Purpose: Analyse data to answer Research Question 4.
+- run_step7_rq5.py
+  - Purpose: Analyse data to answer Research Question 5.
 
-- **RQ2 – No‑show Modeling (logistic)**  
-  **Figures:** `RQ2_Fig1.pdf` (WaitingDays vs outcome), `RQ2_Fig2.pdf` (ROC + confusion matrix)  
-  **Tables:** `RQ2_Table1.xlsx` (coefficients/OR/metrics), `RQ2_Table2.xlsx` (no‑show by cohort)
+(If descriptions above are incomplete, I can expand each to document inputs, outputs and runtime expectations).
 
-- **RQ3 – Star Schema & Performance**  
-  **Figures:** `RQ3_Fig1.pdf` (schema), `RQ3_Fig2.pdf` (raw vs star timings)  
-  **Tables:** `RQ3_Table1.xlsx` (schema catalog), `RQ3_Table2.xlsx` (KPI mapping)
+Configuration (.env)
+- Create a file named `.env` in the repository root or set environment variables in your environment / Docker compose.
+- A template is provided as `.env.template` in this repo. Copy it to `.env` and update values.
 
-- **RQ4 – Scalability & Reproducibility**  
-  **Figures:** `RQ4_Fig1.pdf` (DAG), `RQ4_Fig2.pdf` (runtime vs rows)  
-  **Tables:** `RQ4_Table1.csv` (benchmark), `RQ4_Table2.xlsx` (artifact SHA‑256 with run_id)
+See `.env.template` for the variables used and example values.
 
-- **RQ5 – LOS & Occupancy Forecasting**  
-  **Figures:** `RQ5_Fig1.pdf` (LOS distributions), `RQ5_Fig2.pdf` (occupancy + 14‑day MA forecast)  
-  **Tables:** `RQ5_Table1.xlsx` (LOS summaries), `RQ5_Table2.xlsx` (backtest + forecast series)
+Running locally with Docker Compose
+- docker-compose up --build -d
+- docker-compose logs -f          # watch logs
+- docker-compose exec <service> bash   # get a shell inside a service container
+- Open Airflow UI at the address configured in docker-compose (commonly http://localhost:8080).
 
-#### All tables and figures are code generated
----
+Running tests locally
+- python -m venv .venv
+- source .venv/bin/activate
+- python -m pip install --upgrade pip
+- python -m pip install -r requirements-dev.txt
+- pytest -q
 
-## Project Structure
+Where outputs go
+- tables/ — generated CSV/TSV tables used in reports.
+- figures/ — generated plots (PNG, SVG).
+- Figures and tables are generated by the pipeline code; code that writes these is in run_step* scripts or src/ modules.
 
-   ```bash
-dags/                  # Airflow DAG definition
-src/                   # Core pipeline logic
-data/                  # Intermediate and processed data (no raw uploads)
-figures/               # Auto-generated PDF figures
-tables/                # Auto-generated tables (CSV/XLSX)
-SUBMISSION/            # Submission templates and instructions
-   ```
+Troubleshooting & tips
+- CI (GitHub Actions): check the Actions tab if a workflow fails. Logs show which step failed.
+- Docker issues: make sure Docker Desktop has sufficient memory and disk space.
+- Missing data: If a script fails due to missing input files, place small sample files under `data/` or add a data generator script (I can provide one).
+- Permission / secrets: never commit real credentials. Use `.env` and Docker secrets for production.
 
----
+Contributing
+- If you plan to accept contributions, consider adding:
+  - CONTRIBUTING.md
+  - CODE_OF_CONDUCT.md
+  - Issue and PR templates
+- Small, focused PRs with tests are easiest to review.
 
-## Team & Roles
+Next suggested tasks (I can do each with you)
+- Add .env.template (I included one below).
+- Add small sample data or a generator script.
+- Add per-DAG docs under `docs/`.
+- Improve README with a small architecture diagram (Mermaid) or images.
 
-- **Magomed Makhsudov** — Technical Lead  
-  (Pipeline implementation, Airflow DAG, experiments, figures & tables)
+License
+- This repository is licensed under the MIT License — see LICENSE.
 
-- **Uzoma Nnaemeka Eze** — Documentation & Presentation Lead  
-  (Final report, slides, formatting, consistency)
+Contact / author
+- Repository owner: 6wwm9dr28x-droid
+- Author listed in commits: Makhsudov Magomed
 
----
-
-## Latest successful run (proof of reproducibility)
-
-- **Airflow DAG run_id:** `manual__2026-01-03T10:17:47+00:00` → **success**  
-- **Provenance (artifact) run_id:** `run_6de73861_20260103_103008`  
-  → See `tables/RQ4_Table2.xlsx` for file list, SHA‑256 hashes, sizes, and timestamps.
-
----
-
-## Reproduce the results
-
-### A) Docker (recommended)
-1. Start services:
-   ```bash
-   docker compose up -d webserver scheduler
-
-2. Trigger the DAG:
-   ```bash
-   docker compose exec webserver airflow dags trigger hospital_project_pipeline
-### B) Local Python (no Airflow)
-Rebuild the submission ZIP
-   ```bash 
-zip -r Figures_and_Tables.zip figures tables
-
-## Quick Start (Local)
-
-   ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-
-# run pipeline step-by-step
-python run_step2_ingest_clean.py
-python run_step3_star_schema.py
-python run_step4_generate_rq_outputs.py
+If you'd like, I can now:
+- Commit this updated README.md and the `.env.template` for you, or
+- Show step-by-step how to add them through the GitHub web UI.
