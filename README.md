@@ -64,7 +64,6 @@ The pipeline performs **ingestion → cleaning → feature derivation → star s
 ### 1. Outpatient Appointments (No-Show Analysis)
 
 - **Source:** Kaggle – Medical Appointment No Shows Dataset  
-- **Link:** https://www.kaggle.com/datasets/joniarroba/hospital-mortality  
 - **Description:**  
   Contains anonymized outpatient appointment records, including patient demographics, scheduled dates, and no-show indicators.  
   Used to analyze outpatient appointment patterns and no-show behavior.
@@ -73,8 +72,7 @@ The pipeline performs **ingestion → cleaning → feature derivation → star s
 
 ### 2. Inpatient Admissions (Resource Utilization)
 
-- **Source:** HDHI – German Hospital Admission Dataset  
-- **Link:** https://www.kaggle.com/datasets/saadfarooq1/german-hospital-admission  
+- **Source:** HDHI –  Hospital Admission Dataset  
 - **Description:**  
   Contains inpatient hospital admission records with diagnostic and administrative information.  
   Used to analyze inpatient load and resource utilization trends.
